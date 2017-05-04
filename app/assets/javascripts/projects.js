@@ -15,6 +15,7 @@ $(function(){
       console.log('not so awesome');
     }).always(function(){
       console.log('we are awesome');
+      $('.new_pledge :submit').removeAttr('disabled');
     });
   });
 
