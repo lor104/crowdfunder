@@ -13,6 +13,9 @@ class ProjectsController < ApplicationController
       @pledges_total += pledge.dollar_amount
     end
 
+    if request.xhr?
+      render json: @pledges_total
+    end
 
   end
 
