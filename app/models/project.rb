@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
 
   def self.search(search)
     if search
-      Project.where(title: search)
+      Project.where("title ILIKE ?", search)
     else
       Project.all
     end
