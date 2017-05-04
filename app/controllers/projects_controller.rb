@@ -3,7 +3,9 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    @projects = @projects.order(:end_date)
+    # @projects = @projects.order(:end_date)
+    @projects = @projects.order(:end_date).page params[:page]
+    @projects = @projects.search(params[:title])
   end
 
   def show
@@ -32,7 +34,7 @@ class ProjectsController < ApplicationController
     else
       render :new
     end
-   end
+  end
 
   private
   def project_params
