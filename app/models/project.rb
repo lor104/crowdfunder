@@ -4,8 +4,8 @@ class Project < ActiveRecord::Base
   has_many :backers, through: :rewards
   accepts_nested_attributes_for :rewards
   validates :goal, numericality: { greater_than: 0 }
-  validates_presence_of :title, :description, :goal, :start_date, :end_date
-
+  validates :title, uniqueness: true
+  validates_presence_of :description, :goal, :start_date, :end_date
   paginates_per 10
 
   def self.search(search)
