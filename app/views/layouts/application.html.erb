@@ -25,10 +25,10 @@
 
       </nav>
     </header>
-    <%= form_tag projects_path, :method => 'get' do %>
+    <!-- <%= form_tag projects_path, :method => 'get' do %>
     <%= text_field_tag :title, params[:search] %>
     <%= submit_tag "Search", :title => nil %>
-    <% end %>
+    <% end %> -->
 
     <% flash.each do |key, message| %>
       <div class="flash-<%= key %>"><%= message %></div>
