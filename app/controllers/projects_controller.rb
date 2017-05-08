@@ -2,12 +2,12 @@ class ProjectsController < ApplicationController
   before_action :require_login, only: [:new, :create]
 
   def index
-    # @projects = Project.all
-    # # @projects = @projects.order(:end_date)
-    # @projects = @projects.order(:end_date).page params[:page]
-    # @projects = @projects.search(params[:title])
     @q = Project.ransack(params[:q])
     @projects = @q.result(distinct: true).page params[:page]
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -16,11 +16,6 @@ class ProjectsController < ApplicationController
     (@project.pledges).each do |pledge|
       @pledges_total += pledge.dollar_amount
     end
-
-    if request.xhr?
-      render json: @pledges_total
-    end
-
   end
 
   def new
@@ -30,12 +25,17 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-
     if @project.save
       redirect_to projects_url
     else
       render :new
     end
+  end
+
+  def search
+    @q = Project.ransack(params[:q])
+    @projects = @q.result(distinct: true).page params[:page]
+    render @projects, layout: false
   end
 
   private
